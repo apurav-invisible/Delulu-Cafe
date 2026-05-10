@@ -11,10 +11,10 @@ function Navbar(){
             <div className="max-w-7xl mx-auto flex items-center h-full justify-between">
                 <Link href="/" className="flex flex-row items-center">
                 <Image 
-                    src="/images/cafe1.png"
+                    src="/images/cafe2.png"
                     alt="Delulu Drinks Logo"
-                    width={80}
-                    height={80}
+                    width={40}
+                    height={40}
                     className="rounded-full"
                 />
                     <span className="text-brand-pink font-bold text-xl tracking-tight">

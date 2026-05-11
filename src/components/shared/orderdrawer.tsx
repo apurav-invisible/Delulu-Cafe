@@ -1,9 +1,12 @@
 "use client"
 import { useState } from "react"
 import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { X } from 'lucide-react';
+import { Clock } from 'lucide-react';
+import { Tag } from 'lucide-react';
 import {
   Drawer,
   DrawerClose,
@@ -13,7 +16,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
-import { GiAbstract100 } from "react-icons/gi";
 
 type Drink ={
     id: number;
@@ -272,72 +274,141 @@ export default function OrderDrawer({ drinks, open, onClose, quantities, onQuant
                         <div className="w-3 h-3 rounded-full bg-green-500" />
                       </div>
                       </div>
-                      <div className="bg-brand-chrome/5 px-4 py-4 rounded-lg border border-brand-chrome/20">
+                      <div className="bg-brand-chrome/5 px-4 py-3 rounded-lg border border-brand-chrome/20">
                         <p className="text-brand-chrome text-sm mb-2">ORDER RECAP 🧾</p>
                         {cartItems.map((drink) => (
-                          <div key={drink.id} className="flex items-center justify-between border-b border-brand-chrome/10 pb-4">
-                            <div className="flex items-center gap-1">
-                              <p className="text-brand-white text-sm font-semibold">{drink.name}</p>
-                              <p className="text-brand-chrome/70 text-xs"> × {quantities[drink.id]}</p>
+                          <div key={drink.id} className="flex items-center justify-between">
+                            <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                              <p className="text-xs">{drink.name}</p>
+                              <p className="ml-2 text-xs text-brand-chrome/70"> × {quantities[drink.id]}</p>
                             </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-brand-white text-sm">₹{drink.price * quantities[drink.id]}</span>
+                            <div className="text-brand-chrome text-xm font-semibold flex">
+                              <p className="ml-2 text-xs">₹{drink.price * quantities[drink.id]}</p>
                             </div>
                           </div>
                         ))}
+                        {ordertype === "Dine-in" && (
+                          <div>
+                            <div className=" border-b border-brand-chrome/10 pb-1">
+                            <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                                <p className="text-xs">GST (govt. taxes)</p>
+                                <p className="ml-2 text-xs">₹{gst.toFixed(2)}</p>
+                              </div>
+                              <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                                <p className="text-xs">Discounts</p>
+                                <p className="ml-2 text-xs">- ₹{discountAmount.toFixed(2)}</p>
+                              </div>
+                            </div>
+                            <div className="text-brand-chrome text-sm font-semibold flex justify-between pt-1">
+                              <p className="text-sm">total damage 💀</p>
+                              <p className="ml-2 text-sm">₹{grandTotal.toFixed(2)}</p>
+                            </div>
+                          </div>
+                        )}
+                        {ordertype === "Delivery" && (
+                          <div>
+                            <div className="border-b border-brand-chrome/10 pb-1">
+                            <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                              <p className="text-xs">GST (govt. taxes)</p>
+                              <p className="ml-2 text-xs">₹{gst.toFixed(2)}</p>
+                            </div>
+                            <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                              <p className="text-xs">Discounts</p>
+                              <p className="ml-2 text-xs">- ₹{discountAmount.toFixed(2)}</p>
+                            </div>
+                            <div className="text-brand-chrome text-xm font-semibold flex justify-between">
+                              <p className="text-xs">Delivery</p>
+                              <p className="ml-2 text-xs">₹{deliveryCharge.toFixed(2)}</p>
+                            </div>
+                            </div>
+                            <div className="text-brand-chrome text-sm font-semibold flex justify-between pt-1">
+                              <p className="text-sm">total damage 💀</p>
+                              <p className="ml-2 text-sm">₹{grandTotal.toFixed(2)}</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
-          <div>
-            <p className="text-brand-chrome text-sm mb-2">Order Type:</p>
-            <div className="flex gap-3">
-              <Button
-              onClick={()=> setOrderType("Dine-in")}
-              className={` px-4 py-2 rounder-full text-sm border transition-all
-                ${ordertype === "Dine-in" ? "bg-brand-pink text-brand-black border-brand-pink" 
-                  : "border-brand-chrome/40 text-brand-chrome hover:bg-brand-pink/10 hover:border-brand-pink"  }`}>Dine In</Button>
-              <Button
-              onClick={()=> setOrderType("Delivery")}
-              className={` px-4 py-2 rounder-full text-sm border transition-all
-                ${ordertype === "Delivery" ? "bg-brand-pink text-brand-black border-brand-pink" 
-                  : "border-brand-chrome/40 text-brand-chrome hover:bg-brand-pink/10 hover:border-brand-pink"  }`}>Delivery</Button>
-                  </div>
+          {discount > 0 && (
+            <div className="bg-brand-chrome/5 px-3 py-2 rounded-lg border border-brand-chrome/20">
+          <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-xl text-brand-chrome"><Tag /></h3>
+              </div>
+              <div>
+                <div>
+                  <p className="text-[0.8rem] text-brand-chrome">financial glow-up activated 💸</p>
+                  <p className="text-sm text-green-400 gap-2">{coupon.toUpperCase()} really said “lemme help” 🫶</p>
+                </div>
+              </div>
+              
             </div>
-            {ordertype === "Dine-in" && (
+          </div>
+        )}
+          <div className="bg-brand-chrome/5 px-3 py-2 rounded-lg border border-brand-chrome/20">
+          {ordertype === "Dine-in" && (
+            <div className="flex items-center gap-2">
               <div>
-                <p className="text-brand-chrome text-sm mb-2"> Table Number </p>
-                <input
-                type="text"
-                value={tableNo}
-                onChange={(e) => setTableNo(e.target.value)}
-                placeholder="Enter table number"
-                className="w-full bg-transparent border border-brand-chrome/30 rounded-full px-3 py-2 text-brand-white text-sm outline-none focus:border-brand-pink transition-colors"/>
-
+                <h3 className="text-xl">🪑</h3>
               </div>
-            )}
-            {ordertype === "Delivery" && (
               <div>
-                <p className="text-brand-chrome text-sm mb-2">Delivery Address</p>
-                <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter delivery address"
-                className="w-full bg-transparent border border-brand-chrome/30 rounded-full px-3 py-2 text-brand-white text-sm outline-none focus:border-brand-pink transition-colors"/>
+                <div>
+                  <p className="text-[0.8rem] text-brand-chrome">Stay & Slay ☕</p>
+                  <p className="text-sm text-brand-white">table {tableNo} got the vibes ready ✨</p>
+                </div>
               </div>
-            )}
+              
+            </div>
+          )}
+          {ordertype === "Delivery" && (
+            <div className="flex items-center gap-2">
+              <div>
+                <h3 className="text-xl">📍</h3>
+              </div>
+              <div>
+                <div>
+                  <p className="text-[0.8rem] text-brand-chrome">pulling up to</p>
+                  <p className="text-sm text-brand-white">{address} 💀</p>
+                </div>
+              </div>
+              
+            </div>
+          )}
+            </div>
+            <div className="bg-brand-chrome/5 px-3 py-2 rounded-lg border border-brand-chrome/20">
+          {ordertype === "Dine-in" && (
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-xl text-brand-chrome"><Clock /></h3>
+              </div>
+              <div>
+                <div>
+                  <p className="text-sm text-brand-chrome gap-2">eta: 12–15 mins, hold tight bestie ⏳</p>
+                </div>
+              </div>
+              
+            </div>
+          )}
+          {ordertype === "Delivery" && (
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-xl text-brand-chrome"><Clock /></h3>
+              </div>
+                <div>
+                  <p className="text-sm text-brand-chrome gap-2">eta: 50-55 mins, hold tight bestie ⏳</p>
+                </div>
+            </div>
+          )}
+            </div>
             </div>    
 
         <DrawerFooter>
           <Button
           onClick={() => {setStep("summary")}}>
-            Next
+            No cap, send it Fr fr <ArrowRight />
           </Button>
-          <DrawerClose asChild>
             <Button
-            onClick={() => {
-                    onCancel()
-            }}
-            variant="outline" >Cancel</Button>
-          </DrawerClose>
+            onClick={() => {setStep("cart")}}
+            variant="outline"><ArrowLeft /> Back</Button>
         </DrawerFooter>
         </>)}
       </DrawerContent>

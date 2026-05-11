@@ -253,30 +253,39 @@ export default function OrderDrawer({ drinks, open, onClose, quantities, onQuant
         <>
         <DrawerHeader>
           <DrawerTitle className="text-brand-white text-2xl">
-              ur vibe summary 🫶
+              payment 💸
             </DrawerTitle>
-                      <DrawerDescription>slay check before u go full send</DrawerDescription>
+                      <DrawerDescription>almost there bestie, last step fr</DrawerDescription>
                     </DrawerHeader>
-                    <div className="px-4 flex flex-col gap-6">
+                    <div className="px-4 flex flex-col gap-2">
+                      <div className=" flex items-center justify-between bg-brand-chrome/5 px-4 py-3 rounded-lg border border-brand-chrome/20">
+                      <div className="flex">
+                        <div className="w-10 h-10 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-lg">
+                        💵
+                      </div>
+                      <div> 
+                        <h3 className="text-brand-white font-semibold ml-3 text-base">cash on delivery</h3>
+                        <p className="text-brand-chrome text-xs ml-3">pay when we pull up, no stress 🤙</p>
+                      </div>
+                      </div>
+                      <div className="w-5 h-5 rounded-full border-2 border-green-500 flex items-center justify-center shrink-0">
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                      </div>
+                      </div>
                       <div className="bg-brand-chrome/5 px-4 py-4 rounded-lg border border-brand-chrome/20">
-                        <p className="text-brand-chrome text-sm mb-2">the bill breakdown 💸</p>
+                        <p className="text-brand-chrome text-sm mb-2">ORDER RECAP 🧾</p>
                         {cartItems.map((drink) => (
-              <div key={drink.id} className="flex items-center justify-between border-b border-brand-chrome/10 pb-4">
-                <div>
-                  <p className="text-brand-white text-sm font-semibold">{drink.name}</p>
-                  <p className="text-brand-chrome/70 text-xs">₹{drink.price} each</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button variant="outline" className="w-7 h-7 p-0"
-                    onClick={() => onQuantityChange(drink.id, Math.max(0, (quantities[drink.id] || 0) - 1))}>−</Button>
-                  <span className="text-brand-white">{quantities[drink.id]}</span>
-                  <Button variant="outline" className="w-7 h-7 p-0"
-                    onClick={() => onQuantityChange(drink.id, (quantities[drink.id] || 0) + 1)}>+</Button>
-                  <span className="text-brand-white text-sm">₹{drink.price * quantities[drink.id]}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+                          <div key={drink.id} className="flex items-center justify-between border-b border-brand-chrome/10 pb-4">
+                            <div className="flex items-center gap-1">
+                              <p className="text-brand-white text-sm font-semibold">{drink.name}</p>
+                              <p className="text-brand-chrome/70 text-xs"> × {quantities[drink.id]}</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-brand-white text-sm">₹{drink.price * quantities[drink.id]}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
           <div>
             <p className="text-brand-chrome text-sm mb-2">Order Type:</p>
             <div className="flex gap-3">

@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { X } from 'lucide-react';
 import { Clock } from 'lucide-react';
 import { Tag } from 'lucide-react';
+import { useRouter} from "next/navigation"
 import {
   Drawer,
   DrawerClose,
@@ -51,6 +52,7 @@ export default function OrderDrawer({ drinks, open, onClose, quantities, onQuant
     const [step, setStep] = useState<"cart" | "summary">("cart")
     const cartItems = drinks.filter(d => (quantities[d.id] || 0) > 0)
     const deliveryCharge = ordertype === "Delivery" ? 80 : 0
+    const router = useRouter()
   
   const total = cartItems.reduce((sum, d) => sum + d.price * quantities[d.id], 0)
   const gst = Math.round(total * 0.05)
@@ -403,7 +405,12 @@ export default function OrderDrawer({ drinks, open, onClose, quantities, onQuant
 
         <DrawerFooter>
           <Button
-          onClick={() => {setStep("summary")}}>
+          onClick={() => {
+            toast.success("order placed bestie! 🎉")
+            setTimeout(() => {
+              onClose()
+            router.push("/order") , 15000})
+          }}>
             No cap, send it Fr fr <ArrowRight />
           </Button>
             <Button
